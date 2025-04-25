@@ -133,23 +133,25 @@ export default function Done() {
             <FlatList
                 style={{ width: '100%', paddingTop: 10 }}
                 data={tasks}
-                renderItem={({ item }) => (
-                    <Pressable onPress={() => handleOnPressTask(item.$id)}>
-                        <View style={[
-                            styles.taskItem,
-                            selectedTasks.includes(item.$id) ? { borderColor: '#6d30b3', borderWidth: 2 } : null
-                        ]}>
-                            <View>
-                                <Text style={{ fontSize: 20 }}>{item.title}</Text>
-                                <Text>{item.description}</Text>
+                renderItem={({ item }) => {
+                    const isSelected = selectedTasks.includes(item.$id);
+                    return (
+                        <Pressable onPress={() => handleOnPressTask(item.$id)}>
+                            <View style={[
+                                styles.taskItem,
+                                isSelected ? styles.taskItemSelected : null
+                            ]}>
+                                <View style={styles.taskContent}>
+                                    <Text style={styles.taskTitle}>{item.title}</Text>
+                                    <Text style={styles.taskDescription}>{item.description}</Text>
+                                </View>
+                                <View style={styles.taskFooter}>
+                                    <Text style={styles.taskDate}><AntDesign name='calendar' /> {formatDate(item.created_at)}</Text>
+                                </View>
                             </View>
-                            <View>
-                                <Text><AntDesign name='calendar' /> Добавено на: {formatDate(item.created_at)}</Text>
-                            </View>
-                        </View>
-                    </Pressable>
-
-                )}
+                        </Pressable>
+                    );
+                }}
                 keyExtractor={(item) => item.$id}
             />
             {selectedTasks.length > 0 &&
@@ -189,18 +191,45 @@ const styles = StyleSheet.create({
         fontSize: 32,
     },
     taskItem: {
-        backgroundColor: '#f0efed',
-        padding: 10,
-        marginBottom: 10,
+        backgroundColor: '#f9f9f9',
+        padding: 15,
+        marginBottom: 12,
         width: '90%',
-        borderRadius: 10,
-        borderColor: 'transparent',
+        borderRadius: 8,
+        borderColor: '#eee',
         borderWidth: 2,
         alignSelf: 'center',
-        boxShadow: '1px 1px 11px 0px rgba(0,0,0,0.75)',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.1,
+        shadowRadius: 2,
+        elevation: 3,
         minHeight: 100,
-        overflow: 'scroll',
         justifyContent: 'space-between',
+    },
+    taskItemSelected: {
+        borderColor: '#6d30b3',
+        borderWidth: 2,
+        backgroundColor: '#f3e5f5',
+    },
+    taskContent: {
+        marginBottom: 10,
+    },
+    taskTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 5,
+    },
+    taskDescription: {
+        fontSize: 14,
+        color: '#555',
+    },
+    taskFooter: {
+        alignItems: 'flex-end',
+    },
+    taskDate: {
+        fontSize: 12,
+        color: '#888',
     },
     button: {
         flexDirection: 'row',
