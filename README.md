@@ -1,4 +1,3 @@
-````markdown
 # ToDo App
 
 A simple ToDo application built with React Native and Expo, using Appwrite as the backend.
@@ -62,4 +61,3 @@ Use the Expo CLI to run the application:
 *   **`appwrite.js`**: Appwrite client configuration and exports ([`appwrite.js`](appwrite.js)).
 *   **`package.json`**: Project dependencies and scripts ([`package.json`](package.json)).
 *   **`.env`**: Environment variables for Appwrite configuration ([`.env`](.env)).
-````
