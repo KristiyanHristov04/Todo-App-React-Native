@@ -24,7 +24,7 @@ A simple ToDo application built with React Native and Expo, using Appwrite as th
 
 1.  **Clone the repository:**
     ```bash
-    git clone <your-repository-url>
+    git clone https://github.com/KristiyanHristov04/Todo-App-React-Native.git
     cd todo-app
     ```
 2.  **Install dependencies:**
