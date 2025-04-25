@@ -61,10 +61,17 @@ Use the Expo CLI to run the application:
 *   **`appwrite.js`**: Appwrite client configuration and exports ([`appwrite.js`](appwrite.js)).
 *   **`package.json`**: Project dependencies and scripts ([`package.json`](package.json)).
 *   **`.env`**: Environment variables for Appwrite configuration ([`.env`](.env)).
-![todo1](https://github.com/user-attachments/assets/4d78f8da-fec5-4c8a-8316-07a340bf1609)
-![todo2](https://github.com/user-attachments/assets/87389cab-3bb3-4fe5-bcc2-13a4ff20e84f)
-![todo3](https://github.com/user-attachments/assets/1645c8a9-9c51-4b91-a571-e4099913b525)
-![todo4](https://github.com/user-attachments/assets/3a76bed1-91b4-4d2a-9947-f95a3ad8f15a)
-![todo5](https://github.com/user-attachments/assets/30e29099-6bdc-4ace-9d2f-7c0d7dd9b6c6)
-![todo6](https://github.com/user-attachments/assets/059e7ec4-cf1c-495a-a39c-7cefe959c493)
-![todo7](https://github.com/user-attachments/assets/bd3bdedf-cf4c-40a7-96b4-ad6973f5ad12)
+
+![todo1-resize](https://github.com/user-attachments/assets/ca0369f1-037a-461b-ac1d-90abe27101a0)
+<br>
+![todo2](https://github.com/user-attachments/assets/30c9b5ab-3e6a-4fd4-8816-044b41d7b325)
+<br>
+![todo3](https://github.com/user-attachments/assets/59efa745-26b7-478e-aa91-779ad7e57459)
+<br>
+![todo4](https://github.com/user-attachments/assets/273cd7d8-1314-44eb-a781-f9dfe2c2cd43)
+<br>
+![todo5](https://github.com/user-attachments/assets/670a22df-2630-44db-bea5-06f00cfaade3)
+<br>
+![todo6](https://github.com/user-attachments/assets/dfbeec2c-36a9-4f6d-99c9-6d4c08b651e6)
+<br>
+![todo7](https://github.com/user-attachments/assets/a8252998-3b24-4e59-9ec9-b1adcea2e057)
