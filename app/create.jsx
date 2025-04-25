@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput, Pressable, Keyboard } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Pressable, Keyboard, KeyboardAvoidingView, Platform } from 'react-native';
 import { databases, ID } from '../appwrite.js';
 import { useState } from 'react';
 import Toast from 'react-native-toast-message';
@@ -87,7 +87,9 @@ export default function CreateTask() {
 
 
     return (
-        <View style={styles.container}>
+        <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={styles.container}>
             <View style={{ width: '100%', paddingHorizontal: 10 }}>
                 <Text>Заглавие:</Text>
                 <TextInput
@@ -122,7 +124,7 @@ export default function CreateTask() {
                 </Pressable>
             </View>
             <Toast />
-        </View>
+        </KeyboardAvoidingView>
     )
 }
 
