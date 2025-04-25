@@ -1,5 +1,5 @@
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { databases } from '../appwrite.js';
 import { Query } from 'react-native-appwrite';
 import { AntDesign } from '@expo/vector-icons';
@@ -9,7 +9,6 @@ import { formatDate } from '../utils/formatDate.js';
 import Toast from 'react-native-toast-message';
 
 export default function Home() {
-    console.log('render');
     const [tasks, setTasks] = useState([]);
     const [selectedTasks, setSelectedTasks] = useState([]);
     const [shouldOrderByDateAsc, setShouldOrderByDateAsc] = useState(true);
@@ -27,7 +26,6 @@ export default function Home() {
             );
 
             setTasks(result.documents);
-            console.log(result);
         }
         catch (error) {
             console.error(error);
@@ -42,16 +40,13 @@ export default function Home() {
 
     function handleOnPressTask(id) {
         if (selectedTasks.includes(id)) {
-            console.log('Removed task with id: ', id);
             setSelectedTasks(selectedTasks.filter((taskId) => taskId !== id));
         } else {
-            console.log('Added task with id: ', id);
             setSelectedTasks([...selectedTasks, id]);
         }
     }
 
     async function handleOnPressMoveToDoneTasks() {
-        console.log('Move to done tasks: ', selectedTasks);
         selectedTasks.map(async (taskId) => {
             try {
                 await databases.updateDocument(

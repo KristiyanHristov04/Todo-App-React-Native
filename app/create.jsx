@@ -1,7 +1,6 @@
 import { View, Text, StyleSheet, TextInput, Pressable, Keyboard } from 'react-native';
 import { databases, ID } from '../appwrite.js';
 import { useState } from 'react';
-import { Ionicons } from '@expo/vector-icons';
 import Toast from 'react-native-toast-message';
 
 
@@ -37,7 +36,6 @@ export default function CreateTask() {
                     }
                 )
 
-                console.log(result);
                 setTitle('');
                 setDescription('');
                 Toast.show({

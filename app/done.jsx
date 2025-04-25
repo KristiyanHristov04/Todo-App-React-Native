@@ -1,5 +1,5 @@
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { databases } from '../appwrite.js';
 import { Query } from 'react-native-appwrite';
 import { AntDesign, Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
@@ -26,7 +26,6 @@ export default function Done() {
             );
 
             setTasks(result.documents);
-            console.log(result);
         }
         catch (error) {
             console.error(error);
@@ -41,16 +40,13 @@ export default function Done() {
 
     function handleOnPressTask(id) {
         if (selectedTasks.includes(id)) {
-            console.log('Removed task with id: ', id);
             setSelectedTasks(selectedTasks.filter((taskId) => taskId !== id));
         } else {
-            console.log('Added task with id: ', id);
             setSelectedTasks([...selectedTasks, id]);
         }
     }
 
     async function handleOnPressMoveToPendingTasks() {
-        console.log('Move to pending tasks: ', selectedTasks);
         selectedTasks.map(async (taskId) => {
             try {
                 await databases.updateDocument(
@@ -90,7 +86,6 @@ export default function Done() {
     }
 
     async function handleOnPressDeleteTasks() {
-        console.log('Delete tasks: ', selectedTasks);
         selectedTasks.map(async (taskId) => {
             try {
                 await databases.deleteDocument(
