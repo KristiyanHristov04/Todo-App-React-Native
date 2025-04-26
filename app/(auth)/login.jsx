@@ -1,11 +1,10 @@
 import { View, Text, TextInput, Pressable, StyleSheet, KeyboardAvoidingView, Platform, Keyboard, Image } from 'react-native'
-import { useState } from 'react';
 import Toast from 'react-native-toast-message';
 import { account } from '../../appwrite.js';
 import { useRouter } from 'expo-router';
 import useAuth from '../../hooks/useAuth.jsx';
-import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import { loginSchema } from '../../schemas/loginSchema.js';
 
 export default function Login() {
     const { checkIfLoggedIn } = useAuth();
@@ -17,14 +16,7 @@ export default function Login() {
             email: '',
             password: ''
         },
-        validationSchema: Yup.object({
-            email: Yup.string()
-                .email('Невалиден имейл адрес.')
-                .required('Моля, въведете имейл.'),
-            password: Yup.string()
-                .min(6, 'Паролата трябва да е поне 6 символа.')
-                .required('Моля, въведете парола.')
-        }),
+        validationSchema: loginSchema,
         onSubmit: handleClickLogin
     })
 

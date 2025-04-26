@@ -1,9 +1,8 @@
 import { View, Text, TextInput, Pressable, StyleSheet, KeyboardAvoidingView, Platform, Keyboard, Image } from 'react-native'
-import { useState } from 'react';
 import Toast from 'react-native-toast-message';
 import { account, ID } from '../../appwrite.js';
-import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import { registerSchema } from '../../schemas/registerSchema.js';
 
 export default function Register() {
 
@@ -13,19 +12,7 @@ export default function Register() {
             password: '',
             confirmPassword: ''
         },
-        validationSchema: Yup.object({
-            email: Yup.string()
-                .email('Невалиден имейл адрес.')
-                .required('Моля, въведете имейл.'),
-            password: Yup.string()
-                .min(6, 'Паролата трябва да е поне 6 символа.')
-                .required('Моля, въведете парола.')
-                .matches(/(?=.*[!@#$%^&*])/, 'Паролата трябва да съдържа поне един специален символ.')
-                .matches(/(?=.*[0-9])/, 'Паролата трябва да съдържа поне една цифра.'),
-            confirmPassword: Yup.string()
-                .oneOf([Yup.ref('password'), null], 'Паролите не съвпадат.')
-                .required('Моля, потвърдете паролата.')
-        }),
+        validationSchema: registerSchema,
         onSubmit: handleClickRegister
     });
 

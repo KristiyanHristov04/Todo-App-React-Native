@@ -14,8 +14,6 @@ export default function AuthProvider({children}) {
     async function checkIfLoggedIn() {
         try {
             const result = await account.get();
-            console.log('Checking if logged in...');
-            console.log(result);
             setIsAuthenticated(true);
             setUser(result);
         } catch (error) {
