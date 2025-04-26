@@ -1,17 +1,20 @@
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useState } from 'react';
-import { databases } from '../appwrite.js';
+import { databases } from '../../appwrite.js';
 import { Query } from 'react-native-appwrite';
 import { AntDesign, Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useFocusEffect } from 'expo-router';
 import { useCallback } from 'react';
-import { formatDate } from '../utils/formatDate.js';
+import { formatDate } from '../../utils/formatDate.js';
 import Toast from 'react-native-toast-message';
+import useAuth from '../../hooks/useAuth.jsx';
 
 export default function Done() {
     const [tasks, setTasks] = useState([]);
     const [selectedTasks, setSelectedTasks] = useState([]);
     const [shouldOrderByDateAsc, setShouldOrderByDateAsc] = useState(true);
+
+    const { user } = useAuth();
 
     async function loadTasks() {
         try {
@@ -20,6 +23,7 @@ export default function Done() {
                 '680b37460025b640d31e',
                 [
                     Query.equal('isDone', true),
+                    Query.equal('user_id', user.$id),
                     shouldOrderByDateAsc ?
                         Query.orderAsc('created_at') : Query.orderDesc('created_at')
                 ]

@@ -1,7 +1,8 @@
 import { View, Text, StyleSheet, TextInput, Pressable, Keyboard, KeyboardAvoidingView, Platform } from 'react-native';
-import { databases, ID } from '../appwrite.js';
+import { databases, ID } from '../../appwrite.js';
 import { useState } from 'react';
 import Toast from 'react-native-toast-message';
+import useAuth from '../../hooks/useAuth.jsx';
 
 
 export default function CreateTask() {
@@ -9,6 +10,8 @@ export default function CreateTask() {
     const [description, setDescription] = useState('');
     const [isTitleValid, setIsTitleValid] = useState(true);
     const [isDescriptionValid, setIsDescriptionValid] = useState(true);
+
+    const { user } = useAuth();
 
     async function createTask() {
         Keyboard.dismiss();
@@ -33,6 +36,7 @@ export default function CreateTask() {
                         description: description,
                         isDone: false,
                         created_at: new Date().toISOString(),
+                        user_id: user.$id
                     }
                 )
 
