@@ -43,11 +43,11 @@ export default function Login() {
                     topOffset: 40,
                 });
             } else {
-                //console.error(error);
+                // console.error(error);
                 Toast.show({
                     type: 'error',
                     text1: 'Неуспешно!',
-                    text2: 'Грешка при влизането във вашия профил.',
+                    text2: 'Възникна грешка при влизането във вашия профил.',
                     position: 'top',
                     visibilityTime: 3000,
                     autoHide: true,
