@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Pressable, StyleSheet, KeyboardAvoidingView, Platform, Keyboard } from 'react-native'
+import { View, Text, TextInput, Pressable, StyleSheet, KeyboardAvoidingView, Platform, Keyboard, Image } from 'react-native'
 import { useState } from 'react';
 import Toast from 'react-native-toast-message';
 import { account, ID } from '../../appwrite.js';
@@ -81,6 +81,10 @@ export default function Register() {
         <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             style={styles.container}>
+            <Image
+                style={styles.image}
+                source={require('../../assets/todo_logo.png')}
+            />
             <View style={{ width: '100%', paddingHorizontal: 10 }}>
                 <Text>Имейл:</Text>
                 <TextInput
@@ -124,6 +128,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         gap: 10
+    },
+    image: {
+        width: 100,
+        height: 100,
+        marginBottom: 20,
     },
     inputField: {
         borderRadius: 10,

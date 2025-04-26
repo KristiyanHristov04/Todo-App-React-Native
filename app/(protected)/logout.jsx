@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Image } from 'react-native';
 import { account } from '../../appwrite.js';
 import useAuth from '../../hooks/useAuth.jsx';
 
@@ -18,6 +18,10 @@ export default function Logout() {
     return (
         <View
             style={styles.container}>
+            <Image
+                style={styles.image}
+                source={require('../../assets/todo_logo.png')}
+            />
             <View style={{ width: '100%', paddingHorizontal: 10 }}>
                 <Text style={{ textAlign: 'center' }}>В момента сте влезли с профила: <Text style={styles.email}>{user.email}</Text>. Сигурни ли сте, че искате да излезете от профила си?</Text>
             </View>
@@ -42,6 +46,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         gap: 10
+    },
+    image: {
+        width: 100,
+        height: 100,
+        marginBottom: 20,
     },
     button: {
         backgroundColor: '#000',

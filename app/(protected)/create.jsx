@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput, Pressable, Keyboard, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Pressable, Keyboard, KeyboardAvoidingView, Platform, Image } from 'react-native';
 import { databases, ID } from '../../appwrite.js';
 import { useState } from 'react';
 import Toast from 'react-native-toast-message';
@@ -94,6 +94,10 @@ export default function CreateTask() {
         <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             style={styles.container}>
+            <Image
+                style={styles.image}
+                source={require('../../assets/todo_logo.png')}
+            />
             <View style={{ width: '100%', paddingHorizontal: 10 }}>
                 <Text>Заглавие:</Text>
                 <TextInput
@@ -139,6 +143,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         gap: 10
+    },
+    image: {
+        width: 100,
+        height: 100,
+        marginBottom: 20,
     },
     title: {
         borderRadius: 10,
