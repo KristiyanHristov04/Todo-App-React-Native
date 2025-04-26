@@ -4,20 +4,23 @@ A simple ToDo application built with React Native and Expo, using Appwrite as th
 
 ## Features
 
-*   Add new tasks with a title and description.
-*   View pending tasks.
-*   View completed tasks.
-*   Mark pending tasks as completed.
-*   Move completed tasks back to pending.
-*   Delete completed tasks.
-*   Sort tasks by creation date (ascending/descending).
+*   User registration and login.
+*   Add new tasks with a title and description (protected).
+*   View pending tasks (protected).
+*   View completed tasks (protected).
+*   Mark pending tasks as completed (protected).
+*   Move completed tasks back to pending (protected).
+*   Delete completed tasks (protected).
+*   Sort tasks by creation date (ascending/descending) (protected).
 *   User feedback via toast messages.
+*   Logout functionality.
 
 ## Tech Stack
 
 *   React Native
 *   Expo (with Expo Router for navigation)
-*   Appwrite (Backend & Database)
+*   Appwrite (Backend, Authentication & Database)
+*   React Context API (for Authentication State)
 *   JavaScript
 
 ## Setup
@@ -55,12 +58,18 @@ Use the Expo CLI to run the application:
 
 ## Project Structure
 
-*   **`app/`**: Contains the screen components managed by Expo Router ([`_layout.jsx`](app/_layout.jsx), [`index.jsx`](app/index.jsx), [`create.jsx`](app/create.jsx), [`done.jsx`](app/done.jsx)).
+*   **`app/`**: Contains the screen components managed by Expo Router.
+    *   **`(auth)/`**: Screens related to authentication (`login.jsx`, `register.jsx`). Uses a separate layout (`_layout.jsx`).
+    *   **`(protected)/`**: Screens accessible only after authentication (`index.jsx`, `create.jsx`, `done.jsx`, `logout.jsx`). Uses a separate layout (`_layout.jsx`) that enforces authentication.
+    *   [`_layout.jsx`](app/_layout.jsx): Root layout for the application.
+    *   [`create.jsx`](app/create.jsx): Publicly accessible create screen (consider if this should be protected).
 *   **`assets/`**: Static assets like icons and splash screens.
+*   **`contexts/`**: Contains React Context providers, like [`AuthContext.jsx`](contexts/AuthContext.jsx) for managing authentication state.
+*   **`hooks/`**: Custom React Hooks, such as [`useAuth.jsx`](hooks/useAuth.jsx) for accessing authentication context.
 *   **`utils/`**: Utility functions, like [`formatDate.js`](utils/formatDate.js).
 *   **`appwrite.js`**: Appwrite client configuration and exports ([`appwrite.js`](appwrite.js)).
 *   **`package.json`**: Project dependencies and scripts ([`package.json`](package.json)).
-*   **`.env`**: Environment variables for Appwrite configuration ([`.env`](.env)).
+*   **`.env`**: Environment variables for Appwrite configuration (if used, otherwise configuration is in `appwrite.js`).
 
 ![todo1-resize](https://github.com/user-attachments/assets/ca0369f1-037a-461b-ac1d-90abe27101a0)
 <br>
