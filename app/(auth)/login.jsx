@@ -4,80 +4,63 @@ import Toast from 'react-native-toast-message';
 import { account } from '../../appwrite.js';
 import { useRouter } from 'expo-router';
 import useAuth from '../../hooks/useAuth.jsx';
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
 
 export default function Login() {
     const { checkIfLoggedIn } = useAuth();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [isEmailValid, setIsEmailValid] = useState(true);
-    const [isPasswordValid, setIsPasswordValid] = useState(true);
 
     const router = useRouter();
 
-    function handleEmailChange(text) {
-        setEmail(text);
-        if (text.length === 0) {
-            setIsEmailValid(false);
-        } else {
-            setIsEmailValid(true);
-        }
-    }
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+            password: ''
+        },
+        validationSchema: Yup.object({
+            email: Yup.string()
+                .email('Невалиден имейл адрес.')
+                .required('Моля, въведете имейл.'),
+            password: Yup.string()
+                .min(6, 'Паролата трябва да е поне 6 символа.')
+                .required('Моля, въведете парола.')
+        }),
+        onSubmit: handleClickLogin
+    })
 
-    function handlePasswordChange(text) {
-        setPassword(text);
-        if (text.length === 0) {
-            setIsPasswordValid(false);
-        } else {
-            setIsPasswordValid(true);
-        }
-    }
-
-    async function handleClickLogin() {
+    async function handleClickLogin(values) {
         Keyboard.dismiss();
-        let isValid = true;
-        if (email.length === 0) {
-            console.log('Email is empty');
-            setIsEmailValid(false);
-            isValid = false;
-        }
 
-        if (password.length === 0) {
-            setIsPasswordValid(false);
-            isValid = false;
-        }
-
-        if (isValid) {
-            try {
-                const result = await account.createEmailPasswordSession(
-                    email,
-                    password,
-                );
-                Toast.show({
-                    type: 'success',
-                    text1: 'Успешно!',
-                    text2: 'Влязохте успешно в профила си.',
-                    position: 'top',
-                    visibilityTime: 2000,
-                    autoHide: true,
-                    topOffset: 40,
-                });
-                setEmail('');
-                setPassword('');
-                await checkIfLoggedIn();
-                router.replace('/');
-            } catch (error) {
-                console.error(error);
-                Toast.show({
-                    type: 'error',
-                    text1: 'Неуспешно!',
-                    text2: 'Грешка при влизането в вашия профил.',
-                    position: 'top',
-                    visibilityTime: 2000,
-                    autoHide: true,
-                    topOffset: 40,
-                });
-                return;
-            }
+        try {
+            const result = await account.createEmailPasswordSession(
+                values.email,
+                values.password,
+            );
+            Toast.show({
+                type: 'success',
+                text1: 'Успешно!',
+                text2: 'Влязохте успешно в профила си.',
+                position: 'top',
+                visibilityTime: 2000,
+                autoHide: true,
+                topOffset: 40,
+            });
+            await checkIfLoggedIn();
+            router.replace('/');
+        } catch (error) {
+            console.error(error);
+            Toast.show({
+                type: 'error',
+                text1: 'Неуспешно!',
+                text2: 'Грешка при влизането в вашия профил.',
+                position: 'top',
+                visibilityTime: 2000,
+                autoHide: true,
+                topOffset: 40,
+            });
+            return;
+        } finally {
+            formik.resetForm();
         }
     }
 
@@ -93,29 +76,35 @@ export default function Login() {
                 <Text>Имейл:</Text>
                 <TextInput
                     style={styles.inputField}
-                    onChangeText={handleEmailChange}
                     placeholder='Имейл'
-                    value={email}
+                    onChangeText={formik.handleChange('email')}
+                    onBlur={formik.handleBlur('email')}
+                    value={formik.values.email}
                 />
-                {!isEmailValid && <Text style={styles.error}>Моля, въведете имейл!</Text>}
+                {formik.touched.email && formik.errors.email && (
+                    <Text style={styles.error}>{formik.errors.email}</Text>
+                )}
             </View>
             <View style={{ width: '100%', paddingHorizontal: 10 }}>
                 <Text>Парола:</Text>
                 <TextInput
                     style={styles.inputField}
-                    onChangeText={handlePasswordChange}
                     placeholder='Парола'
-                    value={password}
+                    value={formik.values.password}
+                    onChangeText={formik.handleChange('password')}
+                    onBlur={formik.handleBlur('password')}
                     secureTextEntry={true}
                 />
-                {!isPasswordValid && <Text style={styles.error}>Моля, въведете парола!</Text>}
+                {formik.touched.password && formik.errors.password && (
+                    <Text style={styles.error}>{formik.errors.password}</Text>
+                )}
             </View>
             <View style={{ width: '100%', paddingHorizontal: 10 }}>
                 <Pressable
                     style={({ pressed }) => [
                         styles.button, pressed ? { opacity: 0.5 } : null
                     ]}
-                    onPress={handleClickLogin}
+                    onPress={formik.handleSubmit}
                 >
                     <Text style={{ color: 'white' }}>Вход</Text>
                 </Pressable>

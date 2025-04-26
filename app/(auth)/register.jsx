@@ -2,78 +2,66 @@ import { View, Text, TextInput, Pressable, StyleSheet, KeyboardAvoidingView, Pla
 import { useState } from 'react';
 import Toast from 'react-native-toast-message';
 import { account, ID } from '../../appwrite.js';
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
 
 export default function Register() {
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [isEmailValid, setIsEmailValid] = useState(true);
-    const [isPasswordValid, setIsPasswordValid] = useState(true);
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+            password: '',
+            confirmPassword: ''
+        },
+        validationSchema: Yup.object({
+            email: Yup.string()
+                .email('Невалиден имейл адрес.')
+                .required('Моля, въведете имейл.'),
+            password: Yup.string()
+                .min(6, 'Паролата трябва да е поне 6 символа.')
+                .required('Моля, въведете парола.')
+                .matches(/(?=.*[!@#$%^&*])/, 'Паролата трябва да съдържа поне един специален символ.')
+                .matches(/(?=.*[0-9])/, 'Паролата трябва да съдържа поне една цифра.'),
+            confirmPassword: Yup.string()
+                .oneOf([Yup.ref('password'), null], 'Паролите не съвпадат.')
+                .required('Моля, потвърдете паролата.')
+        }),
+        onSubmit: handleClickRegister
+    });
 
-    function handleEmailChange(text) {
-        setEmail(text);
-        if (text.length === 0) {
-            setIsEmailValid(false);
-        } else {
-            setIsEmailValid(true);
-        }
-    }
-
-    function handlePasswordChange(text) {
-        setPassword(text);
-        if (text.length === 0) {
-            setIsPasswordValid(false);
-        } else {
-            setIsPasswordValid(true);
-        }
-    }
-
-    async function handleClickRegister() {
+    async function handleClickRegister(values) {
         Keyboard.dismiss();
-        let isValid = true;
-        if (email.length === 0) {
-            setIsEmailValid(false);
-            isValid = false;
-        }
 
-        if (password.length === 0) {
-            setIsPasswordValid(false);
-            isValid = false;
-        }
+        try {
+            const result = await account.create(
+                ID.unique(),
+                values.email,
+                values.password,
+            );
 
-        if (isValid) {
-            try {
-                const result = await account.create(
-                    ID.unique(),
-                    email,
-                    password,
-                );
-
-                console.log(result);
-                Toast.show({
-                    type: 'success',
-                    text1: 'Успешно!',
-                    text2: 'Регистрирахте се успешно.',
-                    position: 'top',
-                    visibilityTime: 2000,
-                    autoHide: true,
-                    topOffset: 40,
-                });
-                setEmail('');
-                setPassword('');
-            } catch (error) {
-                console.error(error);
-                Toast.show({
-                    type: 'error',
-                    text1: 'Неуспешно!',
-                    text2: 'Грешка при регистрацията.',
-                    position: 'top',
-                    visibilityTime: 2000,
-                    autoHide: true,
-                    topOffset: 40,
-                });
-                return;
-            }
+            Toast.show({
+                type: 'success',
+                text1: 'Успешно!',
+                text2: 'Регистрирахте се успешно.',
+                position: 'top',
+                visibilityTime: 2000,
+                autoHide: true,
+                topOffset: 40,
+            });
+        } catch (error) {
+            console.error(error);
+            Toast.show({
+                type: 'error',
+                text1: 'Неуспешно!',
+                text2: 'Грешка при регистрацията.',
+                position: 'top',
+                visibilityTime: 2000,
+                autoHide: true,
+                topOffset: 40,
+            });
+            return;
+        } finally {
+            formik.resetForm();
         }
     }
 
@@ -89,29 +77,49 @@ export default function Register() {
                 <Text>Имейл:</Text>
                 <TextInput
                     style={styles.inputField}
-                    onChangeText={handleEmailChange}
                     placeholder='Имейл'
-                    value={email}
+                    onChangeText={formik.handleChange('email')}
+                    onBlur={formik.handleBlur('email')}
+                    value={formik.values.email}
                 />
-                {!isEmailValid && <Text style={styles.error}>Моля, въведете имейл!</Text>}
+                {formik.touched.email && formik.errors.email && (
+                    <Text style={styles.error}>{formik.errors.email}</Text>
+                )}
             </View>
             <View style={{ width: '100%', paddingHorizontal: 10 }}>
                 <Text>Парола:</Text>
                 <TextInput
                     style={styles.inputField}
-                    onChangeText={handlePasswordChange}
                     placeholder='Парола'
-                    value={password}
+                    value={formik.values.password}
+                    onChangeText={formik.handleChange('password')}
+                    onBlur={formik.handleBlur('password')}
                     secureTextEntry={true}
                 />
-                {!isPasswordValid && <Text style={styles.error}>Моля, въведете парола!</Text>}
+                {formik.touched.password && formik.errors.password && (
+                    <Text style={styles.error}>{formik.errors.password}</Text>
+                )}
+            </View>
+            <View style={{ width: '100%', paddingHorizontal: 10 }}>
+                <Text>Потвърдете паролата:</Text>
+                <TextInput
+                    style={styles.inputField}
+                    placeholder='Потвърдете паролата'
+                    value={formik.values.confirmPassword}
+                    onChangeText={formik.handleChange('confirmPassword')}
+                    onBlur={formik.handleBlur('confirmPassword')}
+                    secureTextEntry={true}
+                />
+                {formik.touched.confirmPassword && formik.errors.confirmPassword && (
+                    <Text style={styles.error}>{formik.errors.confirmPassword}</Text>
+                )}
             </View>
             <View style={{ width: '100%', paddingHorizontal: 10 }}>
                 <Pressable
                     style={({ pressed }) => [
                         styles.button, pressed ? { opacity: 0.5 } : null
                     ]}
-                    onPress={handleClickRegister}
+                    onPress={formik.handleSubmit}
                 >
                     <Text style={{ color: 'white' }}>Регистрация</Text>
                 </Pressable>
