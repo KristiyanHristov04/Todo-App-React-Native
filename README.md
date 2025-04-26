@@ -71,16 +71,22 @@ Use the Expo CLI to run the application:
 *   **`package.json`**: Project dependencies and scripts ([`package.json`](package.json)).
 *   **`.env`**: Environment variables for Appwrite configuration (if used, otherwise configuration is in `appwrite.js`).
 
-![todo1-resize](https://github.com/user-attachments/assets/ca0369f1-037a-461b-ac1d-90abe27101a0)
+![img01](https://github.com/user-attachments/assets/7aa8426f-a190-4294-b38e-73a0c145a8ea)
 <br>
-![todo2](https://github.com/user-attachments/assets/30c9b5ab-3e6a-4fd4-8816-044b41d7b325)
+![img02](https://github.com/user-attachments/assets/7f2ed371-f5e9-4c85-8ca6-a82184d5af4e)
 <br>
-![todo3](https://github.com/user-attachments/assets/59efa745-26b7-478e-aa91-779ad7e57459)
+![img03](https://github.com/user-attachments/assets/a35e4385-9699-4911-92b3-4366b020d766)
 <br>
-![todo4](https://github.com/user-attachments/assets/273cd7d8-1314-44eb-a781-f9dfe2c2cd43)
+![img04](https://github.com/user-attachments/assets/05bc776d-4506-469a-b5dc-4c20261c16bb)
 <br>
-![todo5](https://github.com/user-attachments/assets/670a22df-2630-44db-bea5-06f00cfaade3)
+![img05](https://github.com/user-attachments/assets/7b386f65-001d-4d39-9e20-f4865091a509)
 <br>
-![todo6](https://github.com/user-attachments/assets/dfbeec2c-36a9-4f6d-99c9-6d4c08b651e6)
+![img06](https://github.com/user-attachments/assets/4b8fa6f5-90de-4fdd-8d3e-3609d47620ff)
 <br>
-![todo7](https://github.com/user-attachments/assets/a8252998-3b24-4e59-9ec9-b1adcea2e057)
+![img07](https://github.com/user-attachments/assets/4404eb82-ae99-4bc4-a056-5239d2786b30)
+<br>
+![img10](https://github.com/user-attachments/assets/2391d039-c9c2-45dc-8651-da60a7259333)
+<br>
+![img08](https://github.com/user-attachments/assets/ce617c4e-ac6c-4f8d-96d4-9f160cc215ce)
+
+
