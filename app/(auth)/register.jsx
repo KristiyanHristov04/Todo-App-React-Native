@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Pressable, StyleSheet, KeyboardAvoidingView, Platform, Keyboard, Image } from 'react-native'
+import { View, Text, TextInput, Pressable, StyleSheet, KeyboardAvoidingView, Platform, Keyboard, Image, TouchableWithoutFeedback } from 'react-native'
 import Toast from 'react-native-toast-message';
 import { account, ID } from '../../appwrite.js';
 import { useFormik } from 'formik';
@@ -53,66 +53,69 @@ export default function Register() {
     }
 
     return (
-        <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            style={styles.container}>
-            <Image
-                style={styles.image}
-                source={require('../../assets/todo_logo.png')}
-            />
-            <View style={{ width: '100%', paddingHorizontal: 10 }}>
-                <Text>Имейл:</Text>
-                <TextInput
-                    style={styles.inputField}
-                    placeholder='Имейл'
-                    onChangeText={formik.handleChange('email')}
-                    onBlur={formik.handleBlur('email')}
-                    value={formik.values.email}
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                style={styles.container}>
+                <Image
+                    style={styles.image}
+                    source={require('../../assets/todo_logo.png')}
                 />
-                {formik.touched.email && formik.errors.email && (
-                    <Text style={styles.error}>{formik.errors.email}</Text>
-                )}
-            </View>
-            <View style={{ width: '100%', paddingHorizontal: 10 }}>
-                <Text>Парола:</Text>
-                <TextInput
-                    style={styles.inputField}
-                    placeholder='Парола'
-                    value={formik.values.password}
-                    onChangeText={formik.handleChange('password')}
-                    onBlur={formik.handleBlur('password')}
-                    secureTextEntry={true}
-                />
-                {formik.touched.password && formik.errors.password && (
-                    <Text style={styles.error}>{formik.errors.password}</Text>
-                )}
-            </View>
-            <View style={{ width: '100%', paddingHorizontal: 10 }}>
-                <Text>Потвърдете паролата:</Text>
-                <TextInput
-                    style={styles.inputField}
-                    placeholder='Потвърдете паролата'
-                    value={formik.values.confirmPassword}
-                    onChangeText={formik.handleChange('confirmPassword')}
-                    onBlur={formik.handleBlur('confirmPassword')}
-                    secureTextEntry={true}
-                />
-                {formik.touched.confirmPassword && formik.errors.confirmPassword && (
-                    <Text style={styles.error}>{formik.errors.confirmPassword}</Text>
-                )}
-            </View>
-            <View style={{ width: '100%', paddingHorizontal: 10 }}>
-                <Pressable
-                    style={({ pressed }) => [
-                        styles.button, pressed ? { opacity: 0.5 } : null
-                    ]}
-                    onPress={formik.handleSubmit}
-                >
-                    <Text style={{ color: 'white' }}>Регистрация</Text>
-                </Pressable>
-            </View>
-            <Toast />
-        </KeyboardAvoidingView>
+                <View style={{ width: '100%', paddingHorizontal: 10 }}>
+                    <Text>Имейл:</Text>
+                    <TextInput
+                        style={styles.inputField}
+                        placeholder='Имейл'
+                        onChangeText={formik.handleChange('email')}
+                        onBlur={formik.handleBlur('email')}
+                        value={formik.values.email}
+                        keyboardType='email-address'
+                    />
+                    {formik.touched.email && formik.errors.email && (
+                        <Text style={styles.error}>{formik.errors.email}</Text>
+                    )}
+                </View>
+                <View style={{ width: '100%', paddingHorizontal: 10 }}>
+                    <Text>Парола:</Text>
+                    <TextInput
+                        style={styles.inputField}
+                        placeholder='Парола'
+                        value={formik.values.password}
+                        onChangeText={formik.handleChange('password')}
+                        onBlur={formik.handleBlur('password')}
+                        secureTextEntry={true}
+                    />
+                    {formik.touched.password && formik.errors.password && (
+                        <Text style={styles.error}>{formik.errors.password}</Text>
+                    )}
+                </View>
+                <View style={{ width: '100%', paddingHorizontal: 10 }}>
+                    <Text>Потвърдете паролата:</Text>
+                    <TextInput
+                        style={styles.inputField}
+                        placeholder='Потвърдете паролата'
+                        value={formik.values.confirmPassword}
+                        onChangeText={formik.handleChange('confirmPassword')}
+                        onBlur={formik.handleBlur('confirmPassword')}
+                        secureTextEntry={true}
+                    />
+                    {formik.touched.confirmPassword && formik.errors.confirmPassword && (
+                        <Text style={styles.error}>{formik.errors.confirmPassword}</Text>
+                    )}
+                </View>
+                <View style={{ width: '100%', paddingHorizontal: 10 }}>
+                    <Pressable
+                        style={({ pressed }) => [
+                            styles.button, pressed ? { opacity: 0.5 } : null
+                        ]}
+                        onPress={formik.handleSubmit}
+                    >
+                        <Text style={{ color: 'white' }}>Регистрация</Text>
+                    </Pressable>
+                </View>
+                <Toast />
+            </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
     )
 }
 

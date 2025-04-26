@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput, Pressable, Keyboard, KeyboardAvoidingView, Platform, Image } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Pressable, Keyboard, KeyboardAvoidingView, Platform, Image, TouchableWithoutFeedback } from 'react-native';
 import { databases, ID } from '../../appwrite.js';
 import { useState } from 'react';
 import Toast from 'react-native-toast-message';
@@ -91,48 +91,50 @@ export default function CreateTask() {
 
 
     return (
-        <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            style={styles.container}>
-            <Image
-                style={styles.image}
-                source={require('../../assets/todo_logo.png')}
-            />
-            <View style={{ width: '100%', paddingHorizontal: 10 }}>
-                <Text>Заглавие:</Text>
-                <TextInput
-                    style={styles.title}
-                    onChangeText={handleOnChangeTitle}
-                    placeholder='Заглавие'
-                    maxLength={40}
-                    value={title}
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                style={styles.container}>
+                <Image
+                    style={styles.image}
+                    source={require('../../assets/todo_logo.png')}
                 />
-                {!isTitleValid && <Text style={styles.error}>Моля, въведете заглавие!</Text>}
-            </View>
-            <View style={{ width: '100%', paddingHorizontal: 10 }}>
-                <Text>Описание:</Text>
-                <TextInput
-                    style={styles.description}
-                    onChangeText={handleOnChangeDescription}
-                    placeholder='Описание'
-                    value={description}
-                    multiline
-                    maxLength={200}
-                />
-                {!isDescriptionValid && <Text style={styles.error}>Моля, въведете описание!</Text>}
-            </View>
-            <View style={{ width: '100%', paddingHorizontal: 10 }}>
-                <Pressable
-                    style={({ pressed }) => [
-                        styles.button, pressed ? { opacity: 0.5 } : null
-                    ]}
-                    onPress={createTask}
-                >
-                    <Text style={{ color: 'white' }}>Добавяне на задача</Text>
-                </Pressable>
-            </View>
-            <Toast />
-        </KeyboardAvoidingView>
+                <View style={{ width: '100%', paddingHorizontal: 10 }}>
+                    <Text>Заглавие:</Text>
+                    <TextInput
+                        style={styles.title}
+                        onChangeText={handleOnChangeTitle}
+                        placeholder='Заглавие'
+                        maxLength={40}
+                        value={title}
+                    />
+                    {!isTitleValid && <Text style={styles.error}>Моля, въведете заглавие!</Text>}
+                </View>
+                <View style={{ width: '100%', paddingHorizontal: 10 }}>
+                    <Text>Описание:</Text>
+                    <TextInput
+                        style={styles.description}
+                        onChangeText={handleOnChangeDescription}
+                        placeholder='Описание'
+                        value={description}
+                        multiline
+                        maxLength={200}
+                    />
+                    {!isDescriptionValid && <Text style={styles.error}>Моля, въведете описание!</Text>}
+                </View>
+                <View style={{ width: '100%', paddingHorizontal: 10 }}>
+                    <Pressable
+                        style={({ pressed }) => [
+                            styles.button, pressed ? { opacity: 0.5 } : null
+                        ]}
+                        onPress={createTask}
+                    >
+                        <Text style={{ color: 'white' }}>Добавяне на задача</Text>
+                    </Pressable>
+                </View>
+                <Toast />
+            </KeyboardAvoidingView>
+        </TouchableWithoutFeedback>
     )
 }
 
