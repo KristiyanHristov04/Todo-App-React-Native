@@ -31,7 +31,16 @@ export default function Home() {
             setTasks(result.documents);
         }
         catch (error) {
-            console.error(error);
+            //console.error(error);
+            Toast.show({
+                type: 'error',
+                text1: 'Неуспешно!',
+                text2: 'Възникна грешка при зареждането на задачите.',
+                position: 'bottom',
+                visibilityTime: 3000,
+                autoHide: true,
+                bottomOffset: 40,
+            });
         }
     }
 
@@ -61,13 +70,13 @@ export default function Home() {
                     }
                 );
             } catch (error) {
-                console.error(error);
+                //console.error(error);
                 Toast.show({
                     type: 'error',
                     text1: 'Неуспешно!',
                     text2: 'Грешка при преместването на задачите',
                     position: 'bottom',
-                    visibilityTime: 2000,
+                    visibilityTime: 3000,
                     autoHide: true,
                     bottomOffset: 40,
                 });
@@ -80,7 +89,7 @@ export default function Home() {
             text1: 'Успешно!',
             text2: 'Преместихте задачите.',
             position: 'bottom',
-            visibilityTime: 2000,
+            visibilityTime: 3000,
             autoHide: true,
             topOffset: 40,
         });

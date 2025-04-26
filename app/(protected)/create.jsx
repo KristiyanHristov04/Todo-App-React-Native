@@ -47,7 +47,7 @@ export default function CreateTask() {
                     text1: 'Успешно!',
                     text2: 'Създадохте нова задача.',
                     position: 'top',
-                    visibilityTime: 2000,
+                    visibilityTime: 3000,
                     autoHide: true,
                     topOffset: 40,
                 });
@@ -58,11 +58,11 @@ export default function CreateTask() {
                     text1: 'Неуспешно!',
                     text2: 'Грешка при създаването на нова задача.',
                     position: 'top',
-                    visibilityTime: 2000,
+                    visibilityTime: 3000,
                     autoHide: true,
                     bottomOffset: 40,
                 });
-                console.error(error);
+                //console.error(error);
             }
         }
 

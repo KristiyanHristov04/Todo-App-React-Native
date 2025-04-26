@@ -31,18 +31,18 @@ export default function Register() {
                 text1: 'Успешно!',
                 text2: 'Регистрирахте се успешно.',
                 position: 'top',
-                visibilityTime: 2000,
+                visibilityTime: 3000,
                 autoHide: true,
                 topOffset: 40,
             });
         } catch (error) {
-            console.error(error);
+            //console.error(error);
             Toast.show({
                 type: 'error',
                 text1: 'Неуспешно!',
                 text2: 'Грешка при регистрацията.',
                 position: 'top',
-                visibilityTime: 2000,
+                visibilityTime: 3000,
                 autoHide: true,
                 topOffset: 40,
             });

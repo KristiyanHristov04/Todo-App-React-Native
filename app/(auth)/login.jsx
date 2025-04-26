@@ -28,28 +28,34 @@ export default function Login() {
                 values.email,
                 values.password,
             );
-            Toast.show({
-                type: 'success',
-                text1: 'Успешно!',
-                text2: 'Влязохте успешно в профила си.',
-                position: 'top',
-                visibilityTime: 2000,
-                autoHide: true,
-                topOffset: 40,
-            });
+
             await checkIfLoggedIn();
             router.replace('/');
         } catch (error) {
-            console.error(error);
-            Toast.show({
-                type: 'error',
-                text1: 'Неуспешно!',
-                text2: 'Грешка при влизането в вашия профил.',
-                position: 'top',
-                visibilityTime: 2000,
-                autoHide: true,
-                topOffset: 40,
-            });
+            if (error.code === 401) {
+                Toast.show({
+                    type: 'error',
+                    text1: 'Неуспешно!',
+                    text2: 'Неправилен имейл адрес или парола.',
+                    position: 'top',
+                    visibilityTime: 3000,
+                    autoHide: true,
+                    topOffset: 40,
+                });
+            } else {
+                //console.error(error);
+                Toast.show({
+                    type: 'error',
+                    text1: 'Неуспешно!',
+                    text2: 'Грешка при влизането във вашия профил.',
+                    position: 'top',
+                    visibilityTime: 3000,
+                    autoHide: true,
+                    topOffset: 40,
+                });
+            }
+
+
             return;
         } finally {
             formik.resetForm();

@@ -6,14 +6,12 @@ import { AuthContext } from '../../contexts/AuthContext.jsx';
 export default function ProtectedLayout() {
 
     const { isAuthenticated } = useContext(AuthContext);
-    console.log('ProtectedLayout ', isAuthenticated);    
 
     if (isAuthenticated === null) {
         return null;
     }
 
     if (!isAuthenticated) {
-        console.log('Reditect to login page')
         return (
             <Redirect href="/(auth)/login" />
         )

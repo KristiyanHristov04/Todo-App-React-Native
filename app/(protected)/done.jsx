@@ -67,11 +67,11 @@ export default function Done() {
                     text1: 'Неуспешно!',
                     text2: 'Грешка при преместването на задачите.',
                     position: 'bottom',
-                    visibilityTime: 2000,
+                    visibilityTime: 3000,
                     autoHide: true,
                     bottomOffset: 40,
                 });
-                console.error(error);
+                //console.error(error);
                 return;
             }
         });
@@ -81,7 +81,7 @@ export default function Done() {
             text1: 'Успешно!',
             text2: 'Преместихте избраните задачи.',
             position: 'bottom',
-            visibilityTime: 2000,
+            visibilityTime: 3000,
             autoHide: true,
             bottomOffset: 40,
         });
@@ -103,11 +103,11 @@ export default function Done() {
                     text1: 'Неуспешно!',
                     text2: 'Грешка при изтриването на задачите',
                     position: 'bottom',
-                    visibilityTime: 2000,
+                    visibilityTime: 3000,
                     autoHide: true,
                     bottomOffset: 40,
                 });
-                console.error(error);
+                //console.error(error);
                 return;
             }
         });
