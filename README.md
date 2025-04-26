@@ -62,10 +62,10 @@ Use the Expo CLI to run the application:
     *   **`(auth)/`**: Screens related to authentication (`login.jsx`, `register.jsx`). Uses a separate layout (`_layout.jsx`).
     *   **`(protected)/`**: Screens accessible only after authentication (`index.jsx`, `create.jsx`, `done.jsx`, `logout.jsx`). Uses a separate layout (`_layout.jsx`) that enforces authentication.
     *   [`_layout.jsx`](app/_layout.jsx): Root layout for the application.
-    *   [`create.jsx`](app/create.jsx): Publicly accessible create screen (consider if this should be protected).
 *   **`assets/`**: Static assets like icons and splash screens.
 *   **`contexts/`**: Contains React Context providers, like [`AuthContext.jsx`](contexts/AuthContext.jsx) for managing authentication state.
 *   **`hooks/`**: Custom React Hooks, such as [`useAuth.jsx`](hooks/useAuth.jsx) for accessing authentication context.
+*   **`schemas/`**: Contains Yup validation schemas for forms, like [`loginSchema.js`](schemas/loginSchema.js) and [`registerSchema.js`](schemas/registerSchema.js).
 *   **`utils/`**: Utility functions, like [`formatDate.js`](utils/formatDate.js).
 *   **`appwrite.js`**: Appwrite client configuration and exports ([`appwrite.js`](appwrite.js)).
 *   **`package.json`**: Project dependencies and scripts ([`package.json`](package.json)).
