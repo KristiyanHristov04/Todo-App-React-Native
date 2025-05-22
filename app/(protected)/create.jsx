@@ -3,13 +3,21 @@ import { databases, ID } from '../../appwrite.js';
 import { useState } from 'react';
 import Toast from 'react-native-toast-message';
 import useAuth from '../../hooks/useAuth.jsx';
+import { SelectList } from 'react-native-dropdown-select-list'
 
+const priorityOptions = [
+    { key: '1', value: 'Висок' },
+    { key: '2', value: 'Среден' },
+    { key: '3', value: 'Нисък' },
+];
 
 export default function CreateTask() {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const [priority, setPriority] = useState(null);
     const [isTitleValid, setIsTitleValid] = useState(true);
     const [isDescriptionValid, setIsDescriptionValid] = useState(true);
+    const [isPriorityValid, setIsPriorityValid] = useState(true);
 
     const { user } = useAuth();
 
@@ -24,6 +32,10 @@ export default function CreateTask() {
             setIsDescriptionValid(false)
             isValid = false;
         }
+        if (!priority || priority.length === 0) {
+            setIsPriorityValid(false)
+            isValid = false;
+        }
 
         if (isTitleValid && isDescriptionValid && isValid) {
             try {
@@ -35,6 +47,7 @@ export default function CreateTask() {
                         title: title,
                         description: description,
                         isDone: false,
+                        priority: priority,
                         created_at: new Date().toISOString(),
                         user_id: user.$id
                     }
@@ -81,6 +94,7 @@ export default function CreateTask() {
     }
 
     function handleOnChangeDescription(text) {
+        console.log(text);
         setDescription(text);
         if (text.length > 0) {
             setIsDescriptionValid(true);
@@ -89,6 +103,13 @@ export default function CreateTask() {
         }
     }
 
+    function handleOnChangePriority() {
+        if (priority) {
+            setIsPriorityValid(true);
+        } else {
+            setIsPriorityValid(false);
+        }
+    }
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -121,6 +142,20 @@ export default function CreateTask() {
                         maxLength={200}
                     />
                     {!isDescriptionValid && <Text style={styles.error}>Моля, въведете описание!</Text>}
+                </View>
+                <View style={{ width: '100%', paddingHorizontal: 10 }}>
+                    <Text>Приоритет:</Text>
+                    <SelectList
+                        setSelected={(val) => setPriority(val)}
+                        data={priorityOptions}
+                        save='value'
+                        placeholder='Изберете приоритет'
+                        search={false}
+                        onSelect={() => handleOnChangePriority()}
+                        boxStyles={{ borderRadius: 10, borderColor: 'black'}}
+                        dropdownStyles={{ borderRadius: 10, borderColor: 'black'}}
+                    />
+                    {!isPriorityValid && <Text style={styles.error}>Моля, изберете приоритет!</Text>}
                 </View>
                 <View style={{ width: '100%', paddingHorizontal: 10 }}>
                     <Pressable

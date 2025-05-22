@@ -125,6 +125,17 @@ export default function Done() {
         setSelectedTasks([]);
     }
 
+    function setPriorityStyle(priority) {
+        switch (priority) {
+            case 'Нисък':
+                return [styles.priority, { backgroundColor: '#2A9D8F' }];
+            case 'Среден':
+                return [styles.priority, { backgroundColor: '#F4A261' }];
+            case 'Висок':
+                return [styles.priority, { backgroundColor: '#E63946' }];
+        }
+    }
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Изпълнени задачи:</Text>
@@ -146,7 +157,10 @@ export default function Done() {
                                 isSelected ? styles.taskItemSelected : null
                             ]}>
                                 <View style={styles.taskContent}>
-                                    <Text style={styles.taskTitle}>{item.title}</Text>
+                                    <View style={styles.taskHeader}>
+                                        <Text style={styles.taskTitle}>{item.title}</Text>
+                                        <Text style={setPriorityStyle(item.priority)}>{item.priority}</Text>
+                                    </View>
                                     <Text style={styles.taskDescription}>{item.description}</Text>
                                 </View>
                                 <View style={styles.taskFooter}>
@@ -219,10 +233,24 @@ const styles = StyleSheet.create({
     taskContent: {
         marginBottom: 10,
     },
+     taskHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 5,
+    },
     taskTitle: {
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 5,
+    },
+    priority: {
+        fontSize: 12,
+        color: '#fff',
+        fontWeight: 'bold',
+        padding: 5,
+        borderRadius: 5,
+        backgroundColor: 'red',
     },
     taskDescription: {
         fontSize: 14,
