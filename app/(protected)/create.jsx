@@ -1,9 +1,10 @@
-import { View, Text, StyleSheet, TextInput, Pressable, Keyboard, KeyboardAvoidingView, Platform, Image, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Pressable, Keyboard, KeyboardAvoidingView, Platform, Image, TouchableWithoutFeedback, ScrollView } from 'react-native';
 import { databases, ID } from '../../appwrite.js';
 import { useState } from 'react';
 import Toast from 'react-native-toast-message';
 import useAuth from '../../hooks/useAuth.jsx';
 import { SelectList } from 'react-native-dropdown-select-list'
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const priorityOptions = [
     { key: '1', value: 'Висок' },
@@ -112,73 +113,74 @@ export default function CreateTask() {
     }
 
     return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <KeyboardAvoidingView
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                style={styles.container}>
-                <Image
-                    style={styles.image}
-                    source={require('../../assets/todo_logo.png')}
-                />
-                <View style={{ width: '100%', paddingHorizontal: 10 }}>
-                    <Text>Заглавие:</Text>
-                    <TextInput
-                        style={styles.title}
-                        onChangeText={handleOnChangeTitle}
-                        placeholder='Заглавие'
-                        maxLength={40}
-                        value={title}
+        <ScrollView style={{ flex: 1, backgroundColor: '#fff' }}>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <View
+                    style={styles.container}
+                >
+                    <Image
+                        style={styles.image}
+                        source={require('../../assets/todo_logo.png')}
                     />
-                    {!isTitleValid && <Text style={styles.error}>Моля, въведете заглавие!</Text>}
+                    <View style={{ width: '100%', paddingHorizontal: 10 }}>
+                        <Text>Заглавие:</Text>
+                        <TextInput
+                            style={styles.title}
+                            onChangeText={handleOnChangeTitle}
+                            placeholder='Заглавие'
+                            maxLength={40}
+                            value={title}
+                        />
+                        {!isTitleValid && <Text style={styles.error}>Моля, въведете заглавие!</Text>}
+                    </View>
+                    <View style={{ width: '100%', paddingHorizontal: 10 }}>
+                        <Text>Описание:</Text>
+                        <TextInput
+                            style={styles.description}
+                            onChangeText={handleOnChangeDescription}
+                            placeholder='Описание'
+                            value={description}
+                            multiline
+                            maxLength={200}
+                        />
+                        {!isDescriptionValid && <Text style={styles.error}>Моля, въведете описание!</Text>}
+                    </View>
+                    <View style={{ width: '100%', paddingHorizontal: 10 }}>
+                        <Text>Приоритет:</Text>
+                        <SelectList
+                            setSelected={(val) => setPriority(val)}
+                            data={priorityOptions}
+                            save='value'
+                            placeholder='Изберете приоритет'
+                            search={false}
+                            onSelect={() => handleOnChangePriority()}
+                            boxStyles={{ borderRadius: 10, borderColor: 'black' }}
+                            dropdownStyles={{ borderRadius: 10, borderColor: 'black' }}
+                        />
+                        {!isPriorityValid && <Text style={styles.error}>Моля, изберете приоритет!</Text>}
+                    </View>
+                    <View style={{ width: '100%', paddingHorizontal: 10 }}>
+                        <Pressable
+                            style={({ pressed }) => [
+                                styles.button, pressed ? { opacity: 0.5 } : null
+                            ]}
+                            onPress={createTask}
+                        >
+                            <Text style={{ color: 'white' }}>Добавяне на задача</Text>
+                        </Pressable>
+                    </View>
+                    <Toast />
                 </View>
-                <View style={{ width: '100%', paddingHorizontal: 10 }}>
-                    <Text>Описание:</Text>
-                    <TextInput
-                        style={styles.description}
-                        onChangeText={handleOnChangeDescription}
-                        placeholder='Описание'
-                        value={description}
-                        multiline
-                        maxLength={200}
-                    />
-                    {!isDescriptionValid && <Text style={styles.error}>Моля, въведете описание!</Text>}
-                </View>
-                <View style={{ width: '100%', paddingHorizontal: 10 }}>
-                    <Text>Приоритет:</Text>
-                    <SelectList
-                        setSelected={(val) => setPriority(val)}
-                        data={priorityOptions}
-                        save='value'
-                        placeholder='Изберете приоритет'
-                        search={false}
-                        onSelect={() => handleOnChangePriority()}
-                        boxStyles={{ borderRadius: 10, borderColor: 'black'}}
-                        dropdownStyles={{ borderRadius: 10, borderColor: 'black'}}
-                    />
-                    {!isPriorityValid && <Text style={styles.error}>Моля, изберете приоритет!</Text>}
-                </View>
-                <View style={{ width: '100%', paddingHorizontal: 10 }}>
-                    <Pressable
-                        style={({ pressed }) => [
-                            styles.button, pressed ? { opacity: 0.5 } : null
-                        ]}
-                        onPress={createTask}
-                    >
-                        <Text style={{ color: 'white' }}>Добавяне на задача</Text>
-                    </Pressable>
-                </View>
-                <Toast />
-            </KeyboardAvoidingView>
-        </TouchableWithoutFeedback>
+            </TouchableWithoutFeedback>
+        </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#fff',
+        width: '100%',
         alignItems: 'center',
-        justifyContent: 'center',
+        alignContent: 'center',
         gap: 10
     },
     image: {
